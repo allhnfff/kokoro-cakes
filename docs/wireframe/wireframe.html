@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Wireframe Kokoro Cakes (sesuai web final)</title>
+<style>
+@page { size: A4 landscape; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #fff; }
+body { font-family: "Segoe UI", Arial, sans-serif; color: #2b2b2b; }
+.page { width: 1600px; height: 1131px; padding: 22px 26px; position: relative; overflow: hidden; break-after: page; }
+.page:last-child { break-after: auto; }
+@media print { .page { zoom: .7019; } }
+.ttl { display: inline-block; background: #4a4a4a; color: #fff; font-weight: 800; font-size: 26px; padding: 4px 18px; border-radius: 0 0 10px 0; margin: -22px 0 0 -26px; letter-spacing: .5px; }
+.sub { font-size: 15px; margin: 6px 0 10px; color: #333; line-height: 1.35; }
+.grid { display: grid; gap: 12px 30px; }
+.cell { position: relative; }
+.cell h3 { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+.arrow::after { content: "\2192"; position: absolute; right: -24px; top: 46%; font-size: 22px; color: #555; }
+/* bingkai layar */
+.scr { border: 1.5px solid #8d8d8d; border-radius: 6px; background: #fff; overflow: hidden; position: relative; font-size: 10.5px; }
+.mob { height: 438px; display: flex; flex-direction: column; }
+.desk { display: flex; flex-direction: column; }
+.hd { display: flex; align-items: center; gap: 6px; padding: 7px 9px; border-bottom: 1px solid #cfcfcf; font-weight: 700; font-size: 11.5px; }
+.hd .logo { width: 18px; height: 18px; border: 1.5px solid #555; border-radius: 50%; }
+.hd .sp { flex: 1; }
+.chip { display: inline-block; border: 1px solid #9a9a9a; border-radius: 12px; padding: 2px 8px; font-size: 9.5px; background: #fff; }
+.chip.on { background: #555; color: #fff; border-color: #555; }
+.cart { position: relative; width: 18px; height: 16px; border: 1.5px solid #555; border-radius: 3px 3px 5px 5px; }
+.cart b { position: absolute; top: -7px; right: -8px; background: #555; color: #fff; font-size: 8px; border-radius: 8px; padding: 0 4px; }
+.body { padding: 8px 9px; flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+.tab { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid #cfcfcf; font-size: 8.5px; text-align: center; }
+.tab span { padding: 5px 0 4px; } .tab span::before { content: ""; display: block; width: 13px; height: 13px; border: 1.3px solid #666; border-radius: 3px; margin: 0 auto 2px; }
+.tab .on { font-weight: 800; }
+.ph { background: #ececec; border: 1px solid #c9c9c9; position: relative; }
+.ph::before, .ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top right, transparent calc(50% - .7px), #bdbdbd 50%, transparent calc(50% + .7px)); }
+.ph::after { background: linear-gradient(to top left, transparent calc(50% - .7px), #bdbdbd 50%, transparent calc(50% + .7px)); }
+.t1 { font-size: 15px; font-weight: 800; } .t2 { font-size: 12.5px; font-weight: 700; } .mut { color: #777; } .sm { font-size: 9px; } .b { font-weight: 700; }
+.ln { height: 6px; background: #d6d6d6; border-radius: 3px; }
+.btn { border: 1px solid #555; border-radius: 4px; padding: 5px 8px; text-align: center; font-size: 10px; font-weight: 700; background: #fff; }
+.btn.pri { background: #555; color: #fff; }
+.btn.dis { border-color: #bbb; color: #aaa; }
+.inp { border: 1px solid #a9a9a9; border-radius: 4px; padding: 5px 7px; color: #888; font-size: 9.5px; background: #fff; }
+.row { display: flex; align-items: center; gap: 6px; } .between { justify-content: space-between; }
+.box { border: 1px solid #c4c4c4; border-radius: 5px; padding: 6px 7px; background: #fff; }
+.soft { background: #f3f3f3; }
+.card2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.mc { border: 1px solid #c4c4c4; border-radius: 5px; overflow: hidden; background: #fff; }
+.mc .ph { height: 58px; border: 0; border-bottom: 1px solid #c9c9c9; }
+.mc .in { padding: 4px 5px; display: flex; flex-direction: column; gap: 3px; }
+.mc .btn { font-size: 8.5px; padding: 2px 4px !important; }
+.mc .row { flex-wrap: wrap; gap: 3px; }
+.stamp { position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; border: 1.5px solid #555; border-radius: 50%; font-size: 7px; display: flex; align-items: center; justify-content: center; font-weight: 800; background: #fff; z-index: 2; }
+.dot::before { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #555; margin-right: 3px; vertical-align: 1px; }
+.step { display: inline-flex; align-items: center; gap: 4px; }
+.step i { width: 17px; height: 17px; border: 1px solid #777; border-radius: 50%; font-style: normal; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; }
+.noren { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; position: absolute; top: 0; left: 0; right: 0; }
+.noren span { height: 22px; background: #8a8a8a; color: #fff; font-size: 11px; display: flex; align-items: center; justify-content: center; clip-path: polygon(0 0,100% 0,100% 100%,50% 85%,0 100%); }
+.check { width: 46px; height: 46px; border-radius: 50%; background: #555; color: #fff; font-size: 26px; display: flex; align-items: center; justify-content: center; margin: 4px auto; }
+.tl { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; font-size: 8.5px; position: relative; }
+.tl div::before { content: ""; display: block; width: 14px; height: 14px; border: 1.5px solid #777; border-radius: 50%; margin: 0 auto 2px; background: #fff; }
+.tl .d::before { background: #555; border-color: #555; }
+.qr { background: repeating-conic-gradient(#555 0 25%, #fff 0 50%) 0 0 / 8px 8px; border: 4px solid #fff; outline: 1px solid #999; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 9.5px; }
+.tbl th { background: #eee; text-align: left; padding: 4px 5px; font-weight: 700; border-bottom: 1px solid #ccc; }
+.tbl td { padding: 4px 5px; border-bottom: 1px solid #e3e3e3; }
+.badge { display: inline-block; border: 1px solid #999; border-radius: 3px; padding: 0 5px; font-size: 8.5px; background: #f1f1f1; }
+.nav { display: flex; gap: 12px; font-size: 10px; } .nav .on { font-weight: 800; text-decoration: underline; }
+.dark { background: #555; color: #fff; } .dark .logo { border-color: #fff; }
+.dark .btn { background: transparent; color: #fff; border-color: #ddd; }
+.btn, .chip, .badge { white-space: nowrap; }
+.tbl .btn { font-size: 8.5px; }
+.stat4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.stat4 .box b { display: block; font-size: 15px; }
+.tables { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.tables div { border: 1px solid #aaa; border-radius: 3px; padding: 3px; font-size: 9px; text-align: center; }
+.tables .t { background: #cfcfcf; }
+.overlay { position: absolute; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; }
+.modal { background: #fff; border-radius: 6px; padding: 12px; width: 70%; text-align: center; }
+.note { font-size: 9px; color: #555; border-left: 2px solid #999; padding-left: 5px; }
+.legend { position: absolute; right: 26px; top: 26px; font-size: 11px; color: #555; text-align: right; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<!-- ============================ HALAMAN 1: CUSTOMER ============================ -->
+<section class="page">
+  <div class="ttl">WIREFRAME CUSTOMER (PELANGGAN)</div>
+  <p class="sub">Sistem Informasi Kokoro Cakes Cafe &amp; Cake Shop<br>Alur pemesanan pelanggan dari meja (scan QR) sampai pesanan diantar</p>
+  <div class="legend">Versi final, sesuai website<br>kokoro-cakes.vercel.app</div>
+
+  <div class="grid" style="grid-template-columns: repeat(6, 1fr);">
+    <!-- 1 -->
+    <div class="cell arrow"><h3>1. Scan QR di Meja</h3>
+      <div class="scr mob">
+        <div class="body" style="align-items:center; justify-content:center; gap:10px; text-align:center;">
+          <div class="box soft" style="width:82%; padding:10px;">
+            <div class="row" style="justify-content:center"><span class="hd" style="border:0;padding:0"><span class="logo"></span>Kokoro Cakes</span></div>
+            <div class="mut sm" style="margin-top:6px">MEJA</div><div style="font-size:30px;font-weight:800;line-height:1">2C</div>
+            <div class="qr" style="width:96px;height:96px;margin:8px auto"></div>
+            <div class="b">Scan untuk melihat menu &amp; memesan</div>
+          </div>
+          <div class="note" style="text-align:left">Tamu duduk di meja yang kosong, lalu scan QR di meja dengan kamera HP. Web langsung tahu nomor mejanya (tanpa memilih meja di layar).</div>
+        </div>
+      </div>
+    </div>
+    <!-- 2 -->
+    <div class="cell arrow"><h3>2. Beranda (Landing)</h3>
+      <div class="scr mob">
+        <div class="hd"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="chip">Meja 2C</span></div>
+        <div class="body">
+          <div class="ph" style="height:96px"><div class="noren"><span>こ</span><span>こ</span><span>ろ</span></div></div>
+          <div class="t1">Selamat datang di meja 2C</div>
+          <div class="mut">Pilih menu, lalu kirim pesanan langsung ke dapur. Bayar dengan QRIS saat checkout atau nanti di kasir.</div>
+          <div class="row"><span class="btn pri">Buka menu</span><span class="btn" style="border:0">Baru pertama kali? Lihat cara pesan</span></div>
+          <div class="t2" style="margin-top:4px">Hari ini mau yang mana?</div>
+          <div class="box"><div class="row between"><span class="b">Cake &amp; Dessert</span><span class="sm mut">10 menu · mulai Rp24.000</span></div>
+            <div class="row" style="margin-top:4px"><span class="ph" style="width:26px;height:26px"></span><span class="ph" style="width:26px;height:26px"></span><span class="ph" style="width:26px;height:26px"></span><span class="sm mut">Strawberry Cake, Matcha Cake…</span></div></div>
+          <div class="box"><div class="row between"><span class="b">Pastry</span><span class="sm mut">8 menu · mulai Rp16.000</span></div></div>
+        </div>
+        <div class="tab"><span class="on">Beranda</span><span>Menu</span><span>Keranjang</span><span>Pesanan</span><span>Cara Pesan</span></div>
+      </div>
+    </div>
+    <!-- 3 -->
+    <div class="cell arrow"><h3>3. Daftar Menu</h3>
+      <div class="scr mob">
+        <div class="hd"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="chip">Meja 2C</span></div>
+        <div class="body">
+          <div class="t1">Menu お品書き</div>
+          <div class="row" style="gap:3px; flex-wrap:wrap"><span class="chip on">Semua</span><span class="chip">Cake &amp; Dessert</span><span class="chip">Pastry</span><span class="chip">Drink</span><span class="chip">Wagashi</span></div>
+          <div class="row"><span class="inp" style="flex:1">Cari matcha, mochi, dorayaki…</span><span class="btn">Cari</span></div>
+          <div class="card2">
+            <div class="mc"><div class="ph"></div><div class="in"><span class="sm mut">苺のショートケーキ</span><span class="b">Strawberry Cake</span><span class="sm dot">Stok: Tersedia</span><div class="row between"><span class="b">Rp28.000</span><span class="btn" style="padding:2px 5px">+ Tambah</span></div></div></div>
+            <div class="mc" style="position:relative"><span class="stamp">売切</span><div class="ph"></div><div class="in"><span class="sm mut">ティラミス</span><span class="b">Tiramisu</span><span class="sm dot">Stok: Habis</span><div class="row between"><span class="b mut">Rp28.000</span><span class="btn dis" style="padding:2px 5px">+ Tambah</span></div></div></div>
+            <div class="mc"><div class="ph"></div><div class="in"><span class="b">Matcha Cake</span><span class="sm dot">Stok: Tersedia</span></div></div>
+            <div class="mc"><div class="ph"></div><div class="in"><span class="b">Japanese Cheesecake</span><span class="badge">Sering dipesan</span></div></div>
+          </div>
+          <div class="box dark" style="margin-top:auto"><div class="row between"><span>Matcha Cake masuk keranjang.</span><span class="b">Lihat keranjang</span></div></div>
+        </div>
+        <div class="tab"><span>Beranda</span><span class="on">Menu</span><span>Keranjang (2)</span><span>Pesanan</span><span>Cara Pesan</span></div>
+      </div>
+    </div>
+    <!-- 4 -->
+    <div class="cell arrow"><h3>4. Detail Menu</h3>
+      <div class="scr mob">
+        <div class="hd"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="chip">Meja 2C</span></div>
+        <div class="body">
+          <div class="sm mut">Menu / Cake &amp; Dessert / Japanese Cheesecake</div>
+          <div class="ph" style="height:118px"></div>
+          <span class="sm mut">スフレチーズケーキ</span>
+          <div class="t1">Japanese Cheesecake</div>
+          <div class="t2">Rp35.000</div>
+          <span class="sm dot">Stok: Tersedia</span>
+          <div class="mut">Cheesecake soufflé yang bergoyang saat disendok, ringan seperti awan.</div>
+          <div class="row"><span class="b">Jumlah</span><span class="btn">−</span><span class="inp" style="width:30px;text-align:center">1</span><span class="btn">+</span></div>
+          <div class="btn pri">Tambah ke keranjang meja 2C</div>
+          <div class="box"><span class="sm mut">Enak dinikmati bersama</span><div class="row between"><span class="b">Yuzu Honey Soda</span><span class="btn" style="padding:2px 5px">+ Tambah</span></div><span class="sm mut">Asam segar yuzu membuat cheesecake terasa makin ringan.</span></div>
+        </div>
+        <div class="tab"><span>Beranda</span><span class="on">Menu</span><span>Keranjang</span><span>Pesanan</span><span>Cara Pesan</span></div>
+      </div>
+    </div>
+    <!-- 5 -->
+    <div class="cell arrow"><h3>5. Keranjang</h3>
+      <div class="scr mob">
+        <div class="hd"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="chip">Meja 2C</span></div>
+        <div class="body">
+          <div class="t1">Keranjang meja 2C</div>
+          <div class="sm mut">Dipakai bersama semua yang memesan dari meja 2C.</div>
+          <div class="box row"><span class="ph" style="width:26px;height:26px"></span><div style="flex:1"><div class="b">Strawberry Cake</div><div class="row between"><span class="row"><span class="btn" style="padding:1px 5px">−</span><span class="b">1</span><span class="btn" style="padding:1px 5px">+</span><span class="sm">🗑</span></span><span class="b">Rp28.000</span></div></div></div>
+          <div class="box row"><span class="ph" style="width:26px;height:26px"></span><div style="flex:1"><div class="b">Iced Matcha Latte</div><div class="row between"><span class="row"><span class="btn" style="padding:1px 5px">−</span><span class="b">2</span><span class="btn" style="padding:1px 5px">+</span><span class="sm">🗑</span></span><span class="b">Rp48.000</span></div></div></div>
+          <div class="t2">Mau sekalian?</div>
+          <div class="box sm">Untuk Strawberry Cake: <b>Hot Genmaicha</b> Rp18.000 <span class="btn" style="padding:1px 4px">+ Tambah</span></div>
+          <div class="box"><div class="b sm">Catatan pesanan (opsional)</div><div class="inp" style="margin:3px 0">Contoh: kurang manis, tanpa es</div>
+            <div class="row between sm"><span>Subtotal</span><span>Rp76.000</span></div><div class="row between sm"><span>Pajak &amp; layanan (10%)</span><span>Rp7.600</span></div><div class="row between b"><span>Total</span><span>Rp83.600</span></div>
+            <div class="btn pri" style="margin-top:4px">Lanjut ke checkout</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- 6 -->
+    <div class="cell"><h3>6. Checkout</h3>
+      <div class="scr mob">
+        <div class="hd"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="chip">Meja 2C</span></div>
+        <div class="body">
+          <div class="row sm"><span class="step"><i>1</i><b>Data pemesan</b></span><span class="step"><i>2</i>Tinjau &amp; bayar</span><span class="step"><i>3</i>Lacak</span></div>
+          <div class="t1">Checkout meja 2C</div>
+          <div class="b">Nama pemesan</div><div class="inp">Rina</div><div class="sm mut">Dipanggil saat pesanan diantar.</div>
+          <div class="b">Catatan pesanan</div><div class="box soft sm">Kurang manis ya <u>Ubah di keranjang</u></div>
+          <div class="b">Metode pembayaran</div>
+          <div class="box"><div class="row"><span class="step"><i>●</i></span><div><div class="b">QRIS</div><div class="sm mut">Bayar sekarang, pesanan langsung ke dapur.</div></div></div></div>
+          <div class="box"><div class="row"><span class="step"><i> </i></span><div><div class="b">Bayar di kasir</div><div class="sm mut">Bayar dulu di kasir dalam 15 menit; pesanan baru disiapkan setelah dibayar.</div></div></div></div>
+          <div class="box sm"><div class="row between"><span>Subtotal</span><span>Rp76.000</span></div><div class="row between"><span>Pajak (10%)</span><span>Rp7.600</span></div><div class="row between b"><span>Total</span><span>Rp83.600</span></div></div>
+          <div class="btn pri">Lanjut tinjau pesanan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns: repeat(4, 1fr) 1.2fr; margin-top:14px;">
+    <!-- 7 -->
+    <div class="cell arrow"><h3>7. Tinjau &amp; Bayar (QRIS)</h3>
+      <div class="scr mob" style="height:430px">
+        <div class="hd"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="chip">Meja 2C</span></div>
+        <div class="body">
+          <div class="row sm"><span class="step"><i>✓</i>Data</span><span class="step"><i>2</i><b>Tinjau &amp; bayar</b></span><span class="step"><i>3</i>Lacak</span></div>
+          <div class="t1">Tinjau pesanan</div>
+          <div class="box sm"><div class="row between"><span>1× Strawberry Cake</span><span>Rp28.000</span></div><div class="row between"><span>2× Iced Matcha Latte</span><span>Rp48.000</span></div><div class="row between b"><span>Total</span><span>Rp83.600</span></div></div>
+          <div class="box" style="text-align:center"><div class="b">Bayar dengan QRIS (simulasi)</div><div class="qr" style="width:92px;height:92px;margin:6px auto"></div><div class="sm mut">Scan QR, lalu tekan tombol di bawah.</div></div>
+          <div class="btn pri">Saya sudah bayar, kirim pesanan</div>
+          <div class="note">Jika memilih Bayar di kasir: tombol menjadi "Kirim pesanan ke dapur", lalu bayar dulu di kasir.</div>
+        </div>
+      </div>
+    </div>
+    <!-- 8 -->
+    <div class="cell arrow"><h3>8. Pesanan Berhasil</h3>
+      <div class="scr mob" style="height:430px">
+        <div class="hd"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="chip">Meja 2C</span></div>
+        <div class="body" style="text-align:center">
+          <div class="row sm" style="justify-content:center"><span class="step"><i>✓</i>Data</span><span class="step"><i>✓</i>Tinjau</span><span class="step"><i>3</i><b>Lacak</b></span></div>
+          <div class="check">✓</div>
+          <div class="t1">Pesanan berhasil!</div>
+          <div class="mut">Pembayaran diterima dan pesanan sudah dikirim ke dapur.</div>
+          <div class="box soft sm" style="text-align:left">
+            <div class="row between"><span class="mut">Nomor pesanan</span><b>KK-261112-0006</b></div><div class="row between"><span class="mut">Nomor meja</span><span>2C</span></div>
+            <div class="row between"><span class="mut">Waktu pesan</span><span>15:38 WIB</span></div><div class="row between"><span class="mut">Metode</span><span>QRIS</span></div>
+            <div class="row between"><span class="mut">Status bayar</span><span>Lunas</span></div><div class="row between b"><span>Total</span><span>Rp83.600</span></div></div>
+          <div class="btn pri">Lihat status pesanan</div>
+          <div class="btn">Kembali ke beranda</div>
+        </div>
+      </div>
+    </div>
+    <!-- 9 -->
+    <div class="cell arrow"><h3>9. Status Pesanan</h3>
+      <div class="scr mob" style="height:430px">
+        <div class="hd"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="chip">Meja 2C</span></div>
+        <div class="body">
+          <div class="row between"><span class="sm mut">Meja 2C · 15:38 WIB</span><span class="badge">Siap Diantar</span></div>
+          <div class="t1">KK-261112-0006</div>
+          <div class="mut sm">Status diperbarui otomatis.</div>
+          <div class="box" style="text-align:center"><div class="t2">お待たせしました</div><div class="sm mut">omatase shimashita · terima kasih sudah menunggu</div><div class="sm">Sebentar lagi sampai di meja 2C.</div></div>
+          <div class="tl"><div class="d">Masuk<br>15:38</div><div class="d">Diproses<br>15:40</div><div class="d">Siap Diantar<br>15:47</div><div>Selesai</div></div>
+          <div class="box sm"><div class="b">Riwayat</div><div>15:47 Pesanan siap diantar ke meja.</div><div>15:40 Pesanan sedang disiapkan.</div><div>15:38 Pesanan diterima. Pembayaran QRIS berhasil.</div></div>
+          <div class="note">Bayar di kasir: muncul kotak "Bayar dulu di kasir" + hitung mundur 15 menit. Pesanan batal: tombol "Pesan lagi menu yang sama".</div>
+        </div>
+        <div class="tab"><span>Beranda</span><span>Menu</span><span>Keranjang</span><span class="on">Pesanan</span><span>Cara Pesan</span></div>
+      </div>
+    </div>
+    <!-- 10 -->
+    <div class="cell"><h3>10. Cara Pesan (Panduan)</h3>
+      <div class="scr mob" style="height:430px">
+        <div class="hd"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="chip">Meja 2C</span></div>
+        <div class="body">
+          <div class="t1">Cara memesan</div>
+          <div class="sm mut">Pesan dari mejamu lewat HP, tanpa antre di kasir.</div>
+          <div class="box"><b>1</b> Scan kode QR di meja</div>
+          <div class="box"><b>2</b> Pilih menu</div>
+          <div class="box"><b>3</b> Periksa keranjang</div>
+          <div class="box"><b>4</b> Checkout dan pilih cara bayar</div>
+          <div class="box"><b>5</b> Pantau pesananmu</div>
+          <div class="box"><b>6</b> Mau pesan lagi? Silakan</div>
+          <div class="t2">Pertanyaan yang sering muncul</div>
+          <div class="box row between sm"><span>Lewat 15 menit belum bayar?</span><b>+</b></div>
+        </div>
+        <div class="tab"><span>Beranda</span><span>Menu</span><span>Keranjang</span><span>Pesanan</span><span class="on">Cara Pesan</span></div>
+      </div>
+    </div>
+    <div class="cell"><h3>Catatan alur</h3>
+      <div class="box sm" style="line-height:1.55">
+        <p><b>Pilih meja:</b> lewat scan QR di meja (QR berisi token rahasia, bisa diganti admin).</p>
+        <p><b>Bayar dulu, baru disiapkan:</b> QRIS langsung lunas; bayar di kasir maksimal 15 menit, lewat batas otomatis batal.</p>
+        <p><b>Satu meja satu keranjang</b> dan satu tagihan bayar-di-kasir terbuka.</p>
+        <p><b>Meja</b> tetap Terisi sampai kasir menekan Kosongkan setelah tamu pergi.</p>
+        <p><b>Tanpa scan QR</b> tamu tetap bisa melihat menu, tetapi tombol Tambah tidak muncul.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ HALAMAN 2: KASIR & ADMIN ============================ -->
+<section class="page">
+  <div class="ttl">WIREFRAME KASIR &amp; ADMIN</div>
+  <p class="sub">Sistem Informasi Kokoro Cakes Cafe &amp; Cake Shop · halaman staf (login username). Menu bertanda * hanya untuk admin.</p>
+  <div class="legend">Versi final, sesuai website<br>kokoro-cakes.vercel.app/kasir</div>
+
+  <div class="grid" style="grid-template-columns: .8fr 1.6fr 1.6fr;">
+    <!-- 1 -->
+    <div class="cell arrow"><h3>1. Login Staf</h3>
+      <div class="scr desk" style="height:300px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes<span class="sp"></span></div>
+        <div class="body" style="align-items:center; justify-content:center">
+          <div class="box" style="width:86%">
+            <div class="t2">Masuk kasir</div><div class="sm mut">Halaman ini khusus staf.</div>
+            <div class="b sm" style="margin-top:6px">Username</div><div class="inp">admin</div>
+            <div class="b sm" style="margin-top:4px">Password</div><div class="inp">••••••••</div>
+            <div class="sm" style="margin:5px 0">☐ Ingat saya</div>
+            <div class="btn pri">Masuk</div>
+            <div class="sm mut" style="margin-top:4px">Lupa password? Minta pemilik toko mengatur ulang.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 2 -->
+    <div class="cell arrow"><h3>2. Dashboard</h3>
+      <div class="scr desk" style="height:300px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes <span class="sm">Admin</span><span class="sp"></span><span class="nav"><span class="on">Dashboard</span><span>Pesanan</span><span>Stok Menu</span><span>Meja</span><span>Laporan</span><span>Kelola Menu*</span></span><span class="btn" style="padding:2px 6px">Keluar</span></div>
+        <div class="body">
+          <div class="t2">Dashboard</div>
+          <div class="stat4"><div class="box sm">Pesanan baru<b>1</b></div><div class="box sm">Sedang diproses<b>0</b></div><div class="box sm">Siap diantar<b>0</b></div><div class="box sm">Selesai hari ini<b>1</b></div></div>
+          <div class="sm mut">1 belum bayar · 3/12 meja terisi · Rp88.000 pendapatan hari ini</div>
+          <div class="grid" style="grid-template-columns: repeat(3,1fr); gap:6px">
+            <div class="box soft"><span class="badge">Masuk</span> (1)<div class="box" style="margin-top:4px"><b>Meja 2C</b> · KK-261112-0006<div class="sm">Rina · 3 item · Rp94.600</div><div class="sm"><span class="badge">Belum Bayar</span> batal otomatis 15:53</div><div class="row" style="margin-top:3px"><span class="btn pri" style="padding:2px 5px">Terima bayar</span><span class="btn dis" style="padding:2px 5px">Mulai proses</span></div></div></div>
+            <div class="box soft"><span class="badge">Diproses</span> (0)<div class="sm mut">Tidak ada pesanan.</div></div>
+            <div class="box soft"><span class="badge">Siap Diantar</span> (0)<div class="sm mut">Tidak ada pesanan.</div></div>
+          </div>
+          <div class="b sm">Status meja</div>
+          <div class="tables"><div>1A</div><div>1B</div><div class="t">1C sejak 15.30</div><div class="t">1D</div><div>2A</div><div class="t">2C</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- 3 -->
+    <div class="cell"><h3>3. Daftar Pesanan</h3>
+      <div class="scr desk" style="height:300px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="nav"><span>Dashboard</span><span class="on">Pesanan</span><span>Stok Menu</span><span>Meja</span><span>Laporan</span></span></div>
+        <div class="body">
+          <div class="t2">Pesanan</div>
+          <div class="row"><span class="inp">Status: Semua ▾</span><span class="inp">Meja ▾</span><span class="inp" style="flex:1">Cari nomor / nama…</span><span class="btn">Filter</span></div>
+          <table class="tbl"><tr><th>Pesanan</th><th>Meja</th><th>Pemesan</th><th>Waktu</th><th>Total</th><th>Status</th><th>Bayar</th></tr>
+            <tr><td><u>KK-261112-0006</u></td><td>2C</td><td>Rina</td><td>12/11 15:38</td><td>Rp94.600</td><td><span class="badge">Masuk</span></td><td><span class="badge">Belum Bayar</span> Bayar di kasir</td></tr>
+            <tr><td><u>KK-261112-0005</u></td><td>1D</td><td>Dika</td><td>12/11 15:30</td><td>Rp61.600</td><td><span class="badge">Diproses</span></td><td><span class="badge">Lunas</span> QRIS</td></tr>
+            <tr><td><u>KK-261112-0004</u></td><td>1C</td><td>Sari</td><td>12/11 15:12</td><td>Rp48.400</td><td><span class="badge">Siap Diantar</span></td><td><span class="badge">Lunas</span> QRIS</td></tr>
+            <tr><td><u>KK-261112-0001</u></td><td>2A</td><td>Andi</td><td>12/11 14:05</td><td>Rp88.000</td><td><span class="badge">Selesai</span></td><td><span class="badge">Lunas</span> Bayar di kasir</td></tr>
+            <tr><td><u>KK-261112-0002</u></td><td>2A</td><td>Andi</td><td>12/11 14:20</td><td>Rp28.600</td><td><span class="badge">Dibatalkan</span></td><td><span class="badge">Dikembalikan</span></td></tr></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns: repeat(4, 1fr); margin-top:12px;">
+    <!-- 4 -->
+    <div class="cell arrow"><h3>4. Detail Pesanan (bayar &amp; status)</h3>
+      <div class="scr desk" style="height:330px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes<span class="sp"></span></div>
+        <div class="body">
+          <div class="sm mut">Pesanan / KK-261112-0006</div>
+          <div class="row between"><span class="t2">KK-261112-0006</span><span><span class="badge">Masuk</span> <span class="badge">Belum Bayar</span></span></div>
+          <div class="sm">Meja 2C · Rina · 15:38 · Bayar di kasir</div>
+          <table class="tbl"><tr><th>Menu</th><th>Jml</th><th>Subtotal</th></tr><tr><td>Matcha Mille Crêpe</td><td>1</td><td>Rp38.000</td></tr><tr><td>Iced Matcha Latte</td><td>2</td><td>Rp48.000</td></tr></table>
+          <div class="row between b"><span>Total</span><span>Rp94.600</span></div>
+          <div class="sm">Catatan: Kurang manis ya</div>
+          <div class="btn pri">Terima pembayaran Rp94.600</div>
+          <div class="sm b">Catatan (opsional)</div><div class="inp">Contoh: minuman menyusul 2 menit</div>
+          <div class="btn dis">Mulai proses</div>
+        </div>
+      </div>
+    </div>
+    <!-- 5 -->
+    <div class="cell arrow"><h3>5. Stok Menu</h3>
+      <div class="scr desk" style="height:330px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="nav"><span class="on">Stok Menu</span></span></div>
+        <div class="body">
+          <div class="t2">Stok menu</div>
+          <div class="sm mut">3 dari 39 menu sedang habis. Pilihan dapur hari ini: 2 dari 3 (kosong lagi pukul 00.00).</div>
+          <table class="tbl"><tr><th>Menu</th><th>Harga</th><th>Status</th><th>Ubah</th><th>Pilihan dapur</th></tr>
+            <tr><td><span class="ph" style="display:inline-block;width:16px;height:16px;vertical-align:middle"></span> Strawberry Cake</td><td>Rp28.000</td><td><span class="badge">Tersedia</span></td><td><span class="btn" style="padding:1px 4px">Tandai habis</span></td><td><span class="btn" style="padding:1px 4px">Jadikan pilihan</span></td></tr>
+            <tr><td><span class="ph" style="display:inline-block;width:16px;height:16px;vertical-align:middle"></span> Matcha Cake</td><td>Rp32.000</td><td><span class="badge">Tersedia</span></td><td><span class="btn" style="padding:1px 4px">Tandai habis</span></td><td><span class="btn pri" style="padding:1px 4px">Hapus pilihan</span></td></tr>
+            <tr><td><span class="ph" style="display:inline-block;width:16px;height:16px;vertical-align:middle"></span> Tiramisu</td><td>Rp28.000</td><td><span class="badge">Habis</span></td><td><span class="btn pri" style="padding:1px 4px">Tandai tersedia</span></td><td>–</td></tr>
+            <tr><td><span class="ph" style="display:inline-block;width:16px;height:16px;vertical-align:middle"></span> Chocolate Cake</td><td>Rp30.000</td><td><span class="badge">Tersedia</span></td><td><span class="btn" style="padding:1px 4px">Tandai habis</span></td><td><span class="btn" style="padding:1px 4px">Jadikan pilihan</span></td></tr></table>
+        </div>
+      </div>
+    </div>
+    <!-- 6 -->
+    <div class="cell arrow"><h3>6. Kelola Menu* (admin)</h3>
+      <div class="scr desk" style="height:330px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes <span class="sm">Admin</span><span class="sp"></span><span class="nav"><span class="on">Kelola Menu</span></span></div>
+        <div class="body">
+          <div class="row between"><span class="t2">Ubah menu</span><span class="btn pri">+ Tambah menu</span></div>
+          <div class="card2"><div><div class="sm b">Nama menu</div><div class="inp">Matcha Cake</div></div><div><div class="sm b">Nama Jepang</div><div class="inp">抹茶ケーキ</div></div>
+            <div><div class="sm b">Kategori</div><div class="inp">Cake &amp; Dessert ▾</div></div><div><div class="sm b">Harga (Rp)</div><div class="inp">32000</div></div></div>
+          <div class="sm b">Deskripsi</div><div class="inp">Bolu matcha hijau tua dengan krim ringan…</div>
+          <div class="sm b">Status</div><div class="sm">◉ Tersedia &nbsp; ○ Habis</div>
+          <div class="sm b">Foto · saran pasangan</div><div class="row"><span class="ph" style="width:34px;height:34px"></span><span class="inp">Pilih file…</span><span class="inp">Pasangan: Strawberry Milk ▾</span></div>
+          <div class="row"><span class="btn pri">Simpan perubahan</span><span class="btn" style="border:0">Batal</span><span class="sp" style="flex:1"></span><span class="btn">Hapus</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- 7 -->
+    <div class="cell"><h3>7. Meja &amp; QR</h3>
+      <div class="scr desk" style="height:330px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="nav"><span class="on">Meja</span></span></div>
+        <div class="body">
+          <div class="row between"><span class="t2">Meja</span><span class="btn pri">Cetak semua QR</span></div>
+          <div class="sm mut">Meja tetap Terisi walau pesanan selesai; tekan Kosongkan setelah tamu pergi.</div>
+          <table class="tbl"><tr><th>Meja</th><th>Status</th><th>Aktif</th><th>QR</th><th></th></tr>
+            <tr><td><b>1A</b></td><td><span class="badge">Tersedia</span></td><td>0</td><td><span class="btn" style="padding:1px 3px">Buka</span> <span class="btn" style="padding:1px 3px">Cetak</span></td><td><span class="btn" style="padding:1px 3px">Ganti QR*</span></td></tr>
+            <tr><td><b>1C</b></td><td><span class="badge">Terisi</span><br><span class="sm mut">sejak 15.30</span></td><td>0</td><td><span class="btn" style="padding:1px 3px">Buka</span> <span class="btn" style="padding:1px 3px">Cetak</span></td><td><span class="btn pri" style="padding:1px 3px">Kosongkan</span></td></tr>
+            <tr><td><b>2C</b></td><td><span class="badge">Terisi</span><br><span class="sm mut">sejak 15.38</span></td><td>1</td><td><span class="btn" style="padding:1px 3px">Buka</span> <span class="btn" style="padding:1px 3px">Cetak</span></td><td class="sm mut">Masih ada pesanan berjalan</td></tr></table>
+          <div class="box soft sm">Ganti QR*: QR lama dan sesi tamu dari QR lama langsung tidak berlaku. Cetak ulang QR meja itu.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns: 1fr 1.7fr 1fr; margin-top:12px;">
+    <!-- 8 -->
+    <div class="cell arrow"><h3>8. Cetak QR Meja</h3>
+      <div class="scr desk" style="height:262px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes<span class="sp"></span></div>
+        <div class="body">
+          <div class="row between"><span class="t2">Cetak QR meja</span><span class="btn pri">Cetak</span></div>
+          <div class="grid" style="grid-template-columns: repeat(3,1fr); gap:6px">
+            <div class="box" style="text-align:center"><div class="sm b">Kokoro Cakes</div><div class="sm mut">MEJA</div><div class="t1">1A</div><div class="qr" style="width:60px;height:60px;margin:3px auto"></div><div class="sm">Scan untuk memesan</div></div>
+            <div class="box" style="text-align:center"><div class="sm b">Kokoro Cakes</div><div class="sm mut">MEJA</div><div class="t1">1B</div><div class="qr" style="width:60px;height:60px;margin:3px auto"></div><div class="sm">Scan untuk memesan</div></div>
+            <div class="box" style="text-align:center"><div class="sm b">Kokoro Cakes</div><div class="sm mut">MEJA</div><div class="t1">1C</div><div class="qr" style="width:60px;height:60px;margin:3px auto"></div><div class="sm">Scan untuk memesan</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 9 -->
+    <div class="cell arrow"><h3>9. Laporan</h3>
+      <div class="scr desk" style="height:262px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="nav"><span class="on">Laporan</span></span></div>
+        <div class="body">
+          <div class="row between"><span class="t2">Laporan penjualan</span><span class="row"><span class="inp">01/11/2026</span><span class="inp">12/11/2026</span><span class="btn pri">Tampilkan</span></span></div>
+          <div class="stat4"><div class="box sm">Total transaksi<b>25</b></div><div class="box sm">Total pendapatan<b>Rp1.250.000</b></div><div class="box sm">Pesanan selesai<b>22</b></div><div class="box sm">Rata-rata transaksi<b>Rp56.800</b></div></div>
+          <div class="grid" style="grid-template-columns: 1fr 1fr; gap:8px">
+            <div class="box"><div class="b sm">Menu terlaris</div>
+              <div class="row sm"><span style="width:90px">Strawberry Cake</span><span style="flex:1;height:7px;background:#666;border-radius:4px"></span><span>32</span></div>
+              <div class="row sm"><span style="width:90px">Iced Matcha Latte</span><span style="width:70%;height:7px;background:#888;border-radius:4px"></span><span>28</span></div>
+              <div class="row sm"><span style="width:90px">Matcha Cake</span><span style="width:50%;height:7px;background:#999;border-radius:4px"></span><span>20</span></div></div>
+            <div class="box"><div class="b sm">Riwayat transaksi</div>
+              <table class="tbl"><tr><th>No.</th><th>Meja</th><th>Total</th><th>Status</th></tr><tr><td>KK-…0020</td><td>1B</td><td>Rp60.000</td><td>Selesai</td></tr><tr><td>KK-…0019</td><td>2D</td><td>Rp104.000</td><td>Selesai</td></tr></table></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 10 -->
+    <div class="cell"><h3>10. Logout (pop-up konfirmasi)</h3>
+      <div class="scr desk" style="height:262px">
+        <div class="hd dark"><span class="logo"></span>Kokoro Cakes<span class="sp"></span><span class="btn" style="padding:2px 6px">Keluar</span></div>
+        <div class="body"><div class="ln"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:80%"></div></div>
+        <div class="overlay"><div class="modal"><div class="step" style="justify-content:center"><i style="width:30px;height:30px;font-size:16px">!</i></div><div class="b" style="margin:6px 0">Apakah Anda yakin ingin keluar dari sistem?</div><div class="card2"><span class="btn">Batal</span><span class="btn pri">Ya, keluar</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
