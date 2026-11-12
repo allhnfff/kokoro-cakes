@@ -20,7 +20,7 @@ Struktur proyek mengikuti proyek kelompok Alverse (front controller, Router, Con
 | `/kasir/meja` | Status meja, jumlah pesanan aktif, tautan QR tiap meja, kosongkan meja. |
 | `/kasir/rekap` | Rekap pesanan Selesai per rentang tanggal dan menu terlaris. |
 
-**Wireframe final (sesuai web):** [docs/wireframe/Wireframe_Kokoro_Cakes_Final.pdf](docs/wireframe/Wireframe_Kokoro_Cakes_Final.pdf) — halaman 1 pelanggan, halaman 2 kasir & admin (sumber: `docs/wireframe/wireframe.html`).
+**Wireframe final (sesuai web, format poster P6 Wireframing):** [docs/wireframe/Wireframe_Kokoro_Cakes_Final.pdf](docs/wireframe/Wireframe_Kokoro_Cakes_Final.pdf). Halaman 1 untuk pelanggan, halaman 2 untuk kasir & admin. Isinya: Information Architecture, User Flow Utama, layar bernomor, dan Keterangan (sumber: `docs/wireframe/wireframe.html`).
 
 **Versi online:** https://kokoro-cakes.vercel.app (Vercel Container Runtime + Upstash Redis, gratis). Cara deploy dan perbedaannya dengan versi lokal: [docs/DEPLOY-VERCEL.md](docs/DEPLOY-VERCEL.md).
 
