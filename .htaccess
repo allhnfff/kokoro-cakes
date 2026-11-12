@@ -1,0 +1,3 @@
+# Lapisan tambahan untuk Apache; DocumentRoot tetap harus diarahkan ke public/.
+# Folder app/, config/, scripts/, tests/, views/, dan file .env tidak boleh dibuka dari browser.
+Require all denied
