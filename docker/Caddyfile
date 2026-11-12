@@ -1,0 +1,10 @@
+# Caddy (FrankenPHP): file statis dari public/, selain itu ke public/index.php (front controller).
+{
+	frankenphp
+}
+
+:{$PORT:80} {
+	root * /app/public
+	encode zstd gzip
+	php_server
+}
