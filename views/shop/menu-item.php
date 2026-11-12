@@ -22,6 +22,7 @@ use App\Http\View;
         <?php if ($item['nama_jp'] !== ''): ?><p class="item-jp" lang="ja"><?= e($item['nama_jp']) ?></p><?php endif; ?>
         <h1><?= e($item['nama_menu']) ?></h1>
         <p class="price price-lg"><?= rupiah($item['harga']) ?></p>
+        <p class="stock<?= $item['tersedia'] ? '' : ' is-out' ?>" data-stock-text>Stok: <?= $item['tersedia'] ? 'Tersedia' : 'Habis' ?></p>
         <p><?= e($item['deskripsi']) ?></p>
         <?php if ($photo): ?><p class="small muted">Foto adalah ilustrasi penyajian; tampilan asli bisa sedikit berbeda.</p><?php endif; ?>
 

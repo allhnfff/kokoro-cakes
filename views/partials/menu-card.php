@@ -34,6 +34,7 @@ $stamp = '<span class="sold-stamp" data-sold-tag' . ($m['tersedia'] ? ' hidden' 
         <?php endif; ?>
         <h3 class="menu-name"><a href="/menu/<?= e($m['id']) ?>"><?= e($m['nama_menu']) ?></a></h3>
         <p class="menu-desc"><?= e($m['deskripsi']) ?></p>
+        <p class="stock<?= $m['tersedia'] ? '' : ' is-out' ?>" data-stock-text>Stok: <?= $m['tersedia'] ? 'Tersedia' : 'Habis' ?></p>
         <div class="menu-foot">
             <span class="price"><?= rupiah($m['harga']) ?></span>
             <?php if ($table !== null): ?>

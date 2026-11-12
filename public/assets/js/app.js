@@ -46,6 +46,8 @@
                     el.classList.toggle('is-habis', habis);
                     var tag = el.querySelector('[data-sold-tag]');
                     if (tag) { tag.hidden = !habis; }
+                    var stock = el.querySelector('[data-stock-text]');
+                    if (stock) { stock.textContent = 'Stok: ' + (habis ? 'Habis' : 'Tersedia'); stock.classList.toggle('is-out', habis); }
                     var btn = el.querySelector('[data-add-btn]');
                     if (btn) { btn.disabled = habis; }
                 });
@@ -267,6 +269,33 @@
     });
     document.querySelectorAll('.cart-badge').forEach(function (el) {
         el.addEventListener('animationend', function () { el.classList.remove('is-bump'); });
+    });
+
+    // ---------- Pop-up konfirmasi (misalnya logout kasir) ----------
+    // Tanpa JavaScript atau tanpa dukungan <dialog>, form langsung terkirim seperti biasa.
+    document.querySelectorAll('form[data-confirm]').forEach(function (form) {
+        if (typeof HTMLDialogElement !== 'function') { return; }
+        form.addEventListener('submit', function (ev) {
+            if (form.getAttribute('data-confirmed') === '1') { return; }
+            ev.preventDefault();
+            var dlg = document.createElement('dialog');
+            dlg.className = 'kk-dialog';
+            dlg.innerHTML = '<div class="kk-dialog-icon" aria-hidden="true">!</div><p></p>'
+                + '<div class="kk-dialog-actions"><button type="button" class="btn" data-no>Batal</button>'
+                + '<button type="button" class="btn btn-primary" data-yes></button></div>';
+            dlg.querySelector('p').textContent = form.getAttribute('data-confirm');
+            dlg.querySelector('[data-yes]').textContent = form.getAttribute('data-confirm-ok') || 'Ya';
+            document.body.appendChild(dlg);
+            dlg.addEventListener('close', function () { dlg.remove(); });
+            dlg.querySelector('[data-no]').addEventListener('click', function () { dlg.close(); });
+            dlg.querySelector('[data-yes]').addEventListener('click', function () {
+                form.setAttribute('data-confirmed', '1');
+                dlg.close();
+                HTMLFormElement.prototype.submit.call(form);
+            });
+            dlg.showModal();
+            dlg.querySelector('[data-no]').focus();
+        });
     });
 
     // ---------- Tombol cetak (kartu QR meja) ----------

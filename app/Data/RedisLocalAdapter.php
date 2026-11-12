@@ -560,7 +560,7 @@ final class RedisLocalAdapter implements DataService
         return $out;
     }
 
-    public function updateOrderStatus(int $orderId, string $from, string $to, string $actor): array
+    public function updateOrderStatus(int $orderId, string $from, string $to, string $actor, string $note = ''): array
     {
         $table = $this->orderTable($orderId);
         $res = $this->lua(LuaScripts::UPDATE_STATUS, [
@@ -568,7 +568,7 @@ final class RedisLocalAdapter implements DataService
             'meja:' . $table, 'meja:' . $table . ':aktif',
         ], [
             $from, $to, $actor, (string) time(),
-            json_encode(OrderRules::TRANSITIONS, JSON_THROW_ON_ERROR), $table, (string) $orderId,
+            json_encode(OrderRules::TRANSITIONS, JSON_THROW_ON_ERROR), $table, (string) $orderId, trim($note),
         ], true);
         return ['status' => (string) $res['status'], 'table_idle' => !empty($res['table_idle'])];
     }

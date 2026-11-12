@@ -132,7 +132,7 @@ interface DataService
     public function listOrders(array $access, array $filter = []): array;
 
     /** table_idle: meja tidak punya pesanan aktif lagi (tetap Terisi sampai dikosongkan staf). @return array{status:'updated'|'unchanged', table_idle:bool} */
-    public function updateOrderStatus(int $orderId, string $from, string $to, string $actor): array;
+    public function updateOrderStatus(int $orderId, string $from, string $to, string $actor, string $note = ''): array;
 
     /** @return 'paid'|'already_paid' */
     public function confirmPayment(int $orderId, string $actor): string;

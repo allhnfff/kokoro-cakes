@@ -52,6 +52,10 @@ $needPay = $next !== null && $order['status_bayar'] !== 'Lunas';
                 <?= csrf_field() ?>
                 <input type="hidden" name="from" value="<?= e($status) ?>">
                 <input type="hidden" name="to" value="<?= e($next) ?>">
+                <?php if (!$needPay): ?>
+                    <label for="catatan-status" class="small">Catatan <span class="muted">(opsional, tampil di riwayat pesanan)</span></label>
+                    <input id="catatan-status" type="text" name="catatan" maxlength="120" placeholder="Contoh: minuman menyusul 2 menit">
+                <?php endif; ?>
                 <button type="submit" class="btn btn-primary"<?= $needPay ? ' disabled' : '' ?>><?= e(OrderRules::actionLabel($next)) ?></button>
                 <?php if ($needPay): ?><p class="small muted">Terima pembayaran dulu; pesanan baru boleh disiapkan setelah lunas.<?= $order['batas_bayar'] > 0 ? ' Batal otomatis pukul ' . e(wib($order['batas_bayar'], 'H:i')) . ' jika belum dibayar.' : '' ?></p><?php endif; ?>
             </form>

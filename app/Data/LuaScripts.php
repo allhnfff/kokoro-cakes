@@ -304,7 +304,7 @@ LUA;
      * KEYS[1] pesanan:{id}  KEYS[2] pesanan:{id}:riwayat  KEYS[3] idx:pesanan:selesai
      * KEYS[4] meja:{kode}   KEYS[5] meja:{kode}:aktif
      * ARGV[1] status_asal  ARGV[2] status_tujuan  ARGV[3] pelaku  ARGV[4] waktu
-     * ARGV[5] JSON transisi sah  ARGV[6] kode_meja  ARGV[7] id pesanan
+     * ARGV[5] JSON transisi sah  ARGV[6] kode_meja  ARGV[7] id pesanan  ARGV[8] catatan kasir (opsional)
      */
     public const UPDATE_STATUS = <<<'LUA'
 if redis.call('EXISTS', KEYS[1]) == 0 then
@@ -346,6 +346,9 @@ elseif to == 'Selesai' then
   -- Meja TIDAK dilepas otomatis: tamu boleh tetap duduk setelah pesanannya selesai.
   -- Meja baru Tersedia saat staf menekan Kosongkan (RELEASE_TABLE) setelah tamu pergi.
   idle = redis.call('SCARD', KEYS[5]) == 0
+end
+if ARGV[8] and ARGV[8] ~= '' then
+  note = note .. ' Catatan: ' .. ARGV[8]
 end
 redis.call('RPUSH', KEYS[2], cjson.encode({jenis = 'status', status = to, at = tonumber(now), by = ARGV[3], note = note}))
 return cjson.encode({ok = true, status = 'updated', table_idle = idle})

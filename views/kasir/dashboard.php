@@ -17,12 +17,16 @@ $occupied = count(array_filter($tables, static fn ($t) => $t['status'] === 'Teri
     Ada perubahan pesanan. <a href="/kasir">Muat ulang dashboard</a>
 </div>
 
+<div class="stats stats-4">
+    <div class="stat"><span>Pesanan baru</span><b><?= count($columns['Masuk'] ?? []) ?></b></div>
+    <div class="stat"><span>Sedang diproses</span><b><?= count($columns['Diproses'] ?? []) ?></b></div>
+    <div class="stat"><span>Siap diantar</span><b><?= count($columns['Siap Diantar'] ?? []) ?></b></div>
+    <div class="stat"><span>Selesai hari ini</span><b><?= (int) $today['selesai'] ?></b></div>
+</div>
 <p class="summary-line">
-    <span><b><?= $activeCount ?></b> pesanan aktif</span>
     <span><b><?= $unpaid ?></b> belum bayar</span>
     <span><b><?= $occupied ?>/<?= count($tables) ?></b> meja terisi</span>
-    <span><b><?= (int) $today['orders'] ?></b> pesanan hari ini</span>
-    <span><b><?= rupiah($today['omzet']) ?></b> dari pesanan selesai hari ini</span>
+    <span><b><?= rupiah($today['omzet']) ?></b> pendapatan hari ini</span>
 </p>
 
 <div class="board">

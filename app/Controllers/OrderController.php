@@ -54,6 +54,11 @@ final class OrderController extends Controller
     public function show(string $id): void
     {
         $order = $this->load($id);
+        if ($this->query('baru') === '1') {
+            // Tepat setelah checkout: layar konfirmasi "Pesanan Berhasil!" (wireframe pelanggan no. 7).
+            $this->render('shop/order-success', ['title' => 'Pesanan Berhasil', 'order' => $order]);
+            return;
+        }
         $this->render('shop/order', [
             'title'         => 'Pesanan ' . $order['kode_pesanan'],
             'order'         => $order,

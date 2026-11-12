@@ -21,7 +21,23 @@ final class CartController extends Controller
         $suggestions = $cart['lines']
             ? MenuCatalog::cartSuggestions($cart['lines'], MenuCatalog::byId($this->data()->listMenu()))
             : [];
-        $this->render('shop/cart', ['title' => 'Keranjang', 'cart' => $cart, 'suggestions' => $suggestions]);
+        $quote = $cart['lines'] ? (new \App\Domain\CheckoutService((array) \App\App::config('order.payment_methods'), (int) \App\App::config('order.tax_percent')))->quote($cart) : null;
+        $this->render('shop/cart', ['title' => 'Keranjang', 'cart' => $cart, 'suggestions' => $suggestions,
+            'quote' => $quote, 'catatan' => (string) ($_SESSION['catatan_pesanan'][$table] ?? '')]);
+    }
+
+    /** Simpan catatan pesanan dari keranjang (wireframe no. 5), lalu lanjut ke checkout. */
+    public function proceed(): void
+    {
+        Csrf::verify();
+        $table = $this->requireTable();
+        try {
+            $_SESSION['catatan_pesanan'][$table] = Validator::optionalText($this->post('catatan'), 'Catatan', 200);
+        } catch (ValidationError $e) {
+            Session::flash('error', $e->getMessage());
+            View::redirect('/keranjang');
+        }
+        View::redirect('/checkout');
     }
 
     public function add(): void

@@ -26,14 +26,14 @@ $is = static fn (string $p): string => ($p === '/kasir' ? $path === '/kasir' : s
             <nav class="main-nav kasir-nav" aria-label="Navigasi kasir">
                 <a href="/kasir"<?= $is('/kasir') ?>>Dashboard</a>
                 <a href="/kasir/pesanan"<?= $is('/kasir/pesanan') ?>>Pesanan</a>
-                <a href="/kasir/menu"<?= $is('/kasir/menu') ?>>Menu</a>
+                <a href="/kasir/menu"<?= $is('/kasir/menu') ?>>Stok Menu</a>
                 <a href="/kasir/meja"<?= $is('/kasir/meja') ?>>Meja</a>
-                <a href="/kasir/rekap"<?= $is('/kasir/rekap') ?>>Rekap</a>
+                <a href="/kasir/rekap"<?= $is('/kasir/rekap') ?>>Laporan</a>
                 <?php if (($kasir['role'] ?? '') === 'admin'): ?>
                     <a href="/kasir/kelola-menu"<?= $is('/kasir/kelola-menu') ?>>Kelola Menu</a>
                 <?php endif; ?>
             </nav>
-            <form action="/kasir/logout" method="post" class="kasir-user">
+            <form action="/kasir/logout" method="post" class="kasir-user" data-confirm="Apakah Anda yakin ingin keluar dari sistem?" data-confirm-ok="Ya, keluar">
                 <?= csrf_field() ?>
                 <span class="small"><?= e($kasir['nama']) ?></span>
                 <button class="btn btn-sm btn-on-dark" type="submit"><?= icon('logout', 16) ?>Keluar</button>

@@ -467,6 +467,41 @@ table.data .num { text-align: right; white-space: nowrap; }
 .entrance .wifi { display: inline-flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 6px 14px; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: var(--paper); font-size: 15px; color: var(--ink); }
 .wifi-pass { user-select: all; }
 
+/* ---------- Disesuaikan dengan wireframe ---------- */
+/* Layar "Pesanan berhasil!" */
+.success { text-align: center; margin: 0 auto var(--s4); }
+.success-mark { width: 84px; height: 84px; margin: 4px auto 12px; border-radius: 50%; background: var(--matcha); color: var(--on-dark); display: flex; align-items: center; justify-content: center; }
+.success h1 { margin-bottom: 6px; }
+.success-detail { text-align: left; margin: var(--s2) 0; padding: 12px 16px; background: var(--bg); border-radius: var(--r-sm); }
+.success-total dd { font-family: var(--mincho); font-weight: 800; font-size: 20px; }
+.success-actions { display: grid; gap: 10px; }
+/* Keranjang: tombol − / + per menu */
+.qty-step { display: inline-flex; align-items: center; gap: 6px; }
+.qty-step form { margin: 0; }
+.qty-step .step-btn { width: 36px; height: 36px; }
+.qty-value { min-width: 28px; text-align: center; font-weight: 700; font-size: 17px; }
+.cost-total { font-weight: 700; border-top: 1px dashed var(--line-2); padding-top: 8px; margin-top: 4px; }
+.cost-total dd { font-family: var(--mincho); font-size: 20px; }
+.note-readonly { margin: 0; padding: 10px 12px; background: var(--bg); border-radius: var(--r-sm); }
+.label { font-weight: 700; display: block; margin-bottom: 6px; }
+/* Stok di kartu menu */
+.stock { margin: 0 0 8px; font-size: 13px; color: var(--matcha-dk); }
+.stock::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--matcha); margin-right: 6px; vertical-align: 1px; }
+.stock.is-out { color: var(--danger); }
+.stock.is-out::before { background: var(--danger); }
+/* Kotak angka dashboard & laporan */
+.stats-4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: var(--s2); }
+@media (min-width: 900px) { .stats-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* Grafik batang menu terlaris */
+.bar-col { width: 40%; }
+.sale-bar { display: block; height: 12px; width: var(--w); min-width: 4px; border-radius: 6px; background: var(--matcha); }
+/* Pop-up konfirmasi (logout) */
+.kk-dialog { border: 0; border-radius: var(--r); padding: var(--s3); max-width: 360px; width: calc(100% - 32px); text-align: center; box-shadow: 0 18px 50px rgba(42, 41, 37, .3); }
+.kk-dialog::backdrop { background: rgba(34, 54, 42, .45); }
+.kk-dialog p { margin: 8px 0 var(--s2); font-weight: 700; }
+.kk-dialog .kk-dialog-icon { width: 52px; height: 52px; margin: 0 auto; border-radius: 50%; border: 2px solid var(--ink); display: flex; align-items: center; justify-content: center; font-family: var(--mincho); font-weight: 800; font-size: 26px; }
+.kk-dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
 /* ---------- Panduan cara pesan ---------- */
 .guide-head { max-width: 720px; }
 .guide-now { display: inline-block; margin-top: 4px; padding: 8px 14px; border-radius: var(--r-sm); background: var(--matcha-tint); color: var(--matcha-dk); }

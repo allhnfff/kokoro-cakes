@@ -1,6 +1,8 @@
 <?php
 /**
+ * Keranjang meja (wireframe pelanggan no. 5): jumlah − / +, catatan pesanan, subtotal + pajak + total.
  * @var array $cart lines, subtotal, units, has_problem @var string $table
+ * @var array|null $quote subtotal, pajak_persen, pajak, total @var string $catatan
  * @var list<array{untuk:string, menu:array, alasan:string}> $suggestions saran pasangan untuk isi keranjang
  */
 use App\Http\View;
@@ -31,13 +33,22 @@ use App\Http\View;
                 </div>
                 <div class="cart-actions">
                     <?php if (!$l['issue']): ?>
-                    <form action="/keranjang/ubah" method="post" class="qty-inline">
-                        <?= csrf_field() ?>
-                        <input type="hidden" name="id_menu" value="<?= e($l['id_menu']) ?>">
-                        <label class="sr-only" for="qty-<?= e($l['id_menu']) ?>">Jumlah <?= e($l['nama_menu']) ?></label>
-                        <input id="qty-<?= e($l['id_menu']) ?>" type="number" name="qty" value="<?= (int) $l['qty'] ?>" min="1" max="<?= (int) config('order.max_qty_per_line') ?>" inputmode="numeric" data-autosubmit>
-                        <button type="submit" class="btn btn-sm">Ubah</button>
-                    </form>
+                    <?php $max = (int) config('order.max_qty_per_line'); $q = (int) $l['qty']; ?>
+                    <div class="qty-step" role="group" aria-label="Jumlah <?= e($l['nama_menu']) ?>">
+                        <form action="/keranjang/ubah" method="post">
+                            <?= csrf_field() ?>
+                            <input type="hidden" name="id_menu" value="<?= e($l['id_menu']) ?>">
+                            <input type="hidden" name="qty" value="<?= max(1, $q - 1) ?>">
+                            <button type="submit" class="step-btn" aria-label="Kurangi <?= e($l['nama_menu']) ?>"<?= $q <= 1 ? ' disabled' : '' ?>><?= icon('minus', 16) ?></button>
+                        </form>
+                        <span class="qty-value" aria-live="polite"><?= $q ?></span>
+                        <form action="/keranjang/ubah" method="post">
+                            <?= csrf_field() ?>
+                            <input type="hidden" name="id_menu" value="<?= e($l['id_menu']) ?>">
+                            <input type="hidden" name="qty" value="<?= min($max, $q + 1) ?>">
+                            <button type="submit" class="step-btn" aria-label="Tambah <?= e($l['nama_menu']) ?>"<?= $q >= $max ? ' disabled' : '' ?>><?= icon('plus', 16) ?></button>
+                        </form>
+                    </div>
                     <?php endif; ?>
                     <form action="/keranjang/hapus" method="post">
                         <?= csrf_field() ?>
@@ -62,16 +73,26 @@ use App\Http\View;
 
     <aside class="card summary">
         <h2>Ringkasan</h2>
-        <dl class="cost">
-            <div><dt><?= (int) $cart['units'] ?> item</dt><dd><?= rupiah($cart['subtotal']) ?></dd></div>
-        </dl>
-        <p class="small muted">Pajak dan total akhir dihitung di langkah berikutnya.</p>
-        <?php if ($cart['has_problem']): ?>
-            <p class="issue">Hapus menu yang habis sebelum melanjutkan.</p>
-            <button class="btn btn-primary btn-block" type="button" disabled>Lanjut ke checkout</button>
-        <?php else: ?>
-            <a class="btn btn-primary btn-block" href="/checkout">Lanjut ke checkout</a>
-        <?php endif; ?>
+        <form action="/keranjang/lanjut" method="post">
+            <?= csrf_field() ?>
+            <div class="field">
+                <label for="catatan">Catatan pesanan <span class="muted">(opsional)</span></label>
+                <textarea id="catatan" name="catatan" rows="2" maxlength="200" placeholder="Contoh: kurang manis, tanpa es"><?= e($catatan) ?></textarea>
+            </div>
+            <dl class="cost">
+                <div><dt>Subtotal (<?= (int) $cart['units'] ?> item)</dt><dd><?= rupiah($quote['subtotal'] ?? $cart['subtotal']) ?></dd></div>
+                <?php if ($quote): ?>
+                    <div><dt>Pajak &amp; layanan (<?= (int) $quote['pajak_persen'] ?>%)</dt><dd><?= rupiah($quote['pajak']) ?></dd></div>
+                    <div class="cost-total"><dt>Total</dt><dd><?= rupiah($quote['total']) ?></dd></div>
+                <?php endif; ?>
+            </dl>
+            <?php if ($cart['has_problem']): ?>
+                <p class="issue">Hapus menu yang habis sebelum melanjutkan.</p>
+                <button class="btn btn-primary btn-block" type="button" disabled>Lanjut ke checkout</button>
+            <?php else: ?>
+                <button class="btn btn-primary btn-block" type="submit">Lanjut ke checkout</button>
+            <?php endif; ?>
+        </form>
         <a class="btn btn-ghost btn-block" href="/menu">Tambah menu lain</a>
     </aside>
 </div>

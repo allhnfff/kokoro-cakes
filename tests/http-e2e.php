@@ -71,7 +71,8 @@ $order = static function (Browser $br, string $method, array $items, ?string $ta
     $id = (int) $m[1];
     $br->follow();
     TestKit::same(200, $br->status, 'halaman pesanan');
-    preg_match('/<h1>(KK-\d{6}-\d{4})<\/h1>/', $br->body, $k);
+    TestKit::assert(str_contains($br->body, 'Pesanan berhasil!'), 'layar Pesanan Berhasil');
+    preg_match('/(KK-\d{6}-\d{4})/', $br->body, $k);
     // Kirim ulang konfirmasi yang sama (klik ganda) -> pesanan yang sama
     $br->post('/checkout/konfirmasi', ['_csrf' => $csrf, 'request_id' => $rid]);
     TestKit::same('/pesanan/' . $id . '?baru=1', $br->location(), 'klik ganda menuju pesanan yang sama');

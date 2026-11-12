@@ -72,6 +72,7 @@ $r->get('/keranjang', [$cart, 'show']);
 $r->post('/keranjang/tambah', [$cart, 'add']);
 $r->post('/keranjang/ubah', [$cart, 'update']);
 $r->post('/keranjang/hapus', [$cart, 'remove']);
+$r->post('/keranjang/lanjut', [$cart, 'proceed']);
 $r->get('/checkout', [$checkout, 'show']);
 $r->post('/checkout/tinjau', [$checkout, 'review']);
 $r->get('/checkout/tinjau', [$checkout, 'reviewPage']);

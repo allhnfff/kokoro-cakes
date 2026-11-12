@@ -22,7 +22,7 @@ final class KasirAuth
     private const ROLES = ['kasir', 'admin'];
 
     /** @return string|null pesan error, atau null jika berhasil */
-    public static function attempt(DataService $data, string $login, string $password): ?string
+    public static function attempt(DataService $data, string $login, string $password, bool $remember = false): ?string
     {
         $lockedUntil = (int) ($_SESSION['_kasir_lock_until'] ?? 0);
         if ($lockedUntil > time()) {
@@ -52,6 +52,7 @@ final class KasirAuth
             'email'     => $staff['email'],
             'role'      => $staff['role'],
             'login_at'  => time(),
+            'remember'  => $remember,
             'last_seen' => time(),
         ];
         return null;
@@ -63,7 +64,9 @@ final class KasirAuth
         if (!is_array($k)) {
             return null;
         }
-        if (time() - (int) ($k['last_seen'] ?? 0) > (int) App::config('session.kasir_idle_limit')) {
+        // "Ingat saya": tetap masuk sampai umur sesi (12 jam); tanpa itu keluar otomatis setelah idle 2 jam.
+        $idle = !empty($k['remember']) ? (int) App::config('session.lifetime') : (int) App::config('session.kasir_idle_limit');
+        if (time() - (int) ($k['last_seen'] ?? 0) > $idle) {
             unset($_SESSION['kasir']);
             return null;
         }

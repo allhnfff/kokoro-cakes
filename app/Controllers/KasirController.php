@@ -42,7 +42,7 @@ final class KasirController extends Controller
     {
         Csrf::verify();
         $login = trim($this->post('login') !== '' ? $this->post('login') : $this->post('email'));
-        $error = KasirAuth::attempt($this->data(), $login, $this->post('password'));
+        $error = KasirAuth::attempt($this->data(), $login, $this->post('password'), $this->post('ingat') === '1');
         if ($error !== null) {
             Session::setOld(['login' => $login]);
             Session::flash('error', $error);
@@ -68,7 +68,7 @@ final class KasirController extends Controller
         $orders = $this->data()->listOrders(KasirAuth::access(), ['limit' => 500]);
         $columns = array_fill_keys(OrderRules::ACTIVE, []);
         $todayStart = (new \DateTimeImmutable('today'))->getTimestamp();
-        $today = ['orders' => 0, 'omzet' => 0];
+        $today = ['orders' => 0, 'omzet' => 0, 'selesai' => 0];
         $unpaid = 0;
         foreach ($orders as $o) {
             if (isset($columns[$o['status_pesanan']])) {
@@ -81,6 +81,7 @@ final class KasirController extends Controller
             if ($o['waktu'] >= $todayStart && $o['status_pesanan'] !== 'Dibatalkan') {
                 $today['orders']++;
                 $today['omzet'] += $o['status_pesanan'] === 'Selesai' ? $o['total'] : 0;
+                $today['selesai'] += $o['status_pesanan'] === 'Selesai' ? 1 : 0;
             }
         }
         $this->renderKasir('kasir/dashboard', [
@@ -161,7 +162,8 @@ final class KasirController extends Controller
         try {
             $from = Validator::orderStatus($this->post('from'));
             $to = Validator::orderStatus($this->post('to'));
-            $res = $this->data()->updateOrderStatus($order['id'], $from, $to, KasirAuth::actor($user));
+            $note = Validator::optionalText($this->post('catatan'), 'Catatan', 120);
+            $res = $this->data()->updateOrderStatus($order['id'], $from, $to, KasirAuth::actor($user), $note);
             $msg = $res['status'] === 'unchanged'
                 ? "Status {$order['kode_pesanan']} sudah {$to}."
                 : "{$order['kode_pesanan']} sekarang {$to}.";
@@ -220,7 +222,7 @@ final class KasirController extends Controller
         $categories = $this->data()->listCategories();
         $menu = $this->data()->listMenu();
         $this->renderKasir('kasir/menu', [
-            'title'  => 'Ketersediaan Menu',
+            'title'  => 'Stok Menu',
             'groups' => MenuCatalog::group($menu, $categories),
             'picks'  => $this->todayPicks(),
             'pickLimit' => MenuCatalog::PICK_LIMIT,
@@ -363,8 +365,13 @@ final class KasirController extends Controller
         $fromTs = (new \DateTimeImmutable($from . ' 00:00:00'))->getTimestamp();
         $toTs = (new \DateTimeImmutable($to . ' 00:00:00'))->modify('+1 day')->getTimestamp();
         $this->renderKasir('kasir/sales', [
-            'title'   => 'Rekap Penjualan',
+            'title'   => 'Laporan Penjualan',
             'summary' => $this->data()->getSalesSummary($fromTs, $toTs),
+            // Semua transaksi (tidak dibatalkan) yang dibuat dalam rentang, dan riwayat pesanan selesai terbaru.
+            'transaksi' => count(array_filter($all = $this->data()->listOrders(KasirAuth::access(), ['limit' => 1000]),
+                static fn ($o) => $o['waktu'] >= $fromTs && $o['waktu'] < $toTs && $o['status_pesanan'] !== 'Dibatalkan')),
+            'riwayat' => array_slice(array_values(array_filter($all,
+                static fn ($o) => $o['status_pesanan'] === 'Selesai' && $o['selesai_at'] >= $fromTs && $o['selesai_at'] < $toTs)), 0, 10),
             'from'    => $from,
             'to'      => $to,
         ]);

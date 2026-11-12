@@ -2,7 +2,7 @@
 /** @var array $groups @var int $habis @var int $total @var array<string,true> $picks @var int $pickLimit */
 ?>
 <div class="page-head">
-    <h1>Ketersediaan menu</h1>
+    <h1>Stok menu</h1>
     <p class="muted"><?= (int) $habis ?> dari <?= (int) $total ?> menu sedang habis. Kasir hanya mengubah ketersediaan; menambah atau menghapus menu bukan wewenang kasir.</p>
     <p class="muted"><b>Pilihan dapur hari ini: <?= count($picks) ?> dari <?= (int) $pickLimit ?></b>. Tampil di beranda pelanggan dan kosong lagi otomatis pukul 00.00.</p>
 </div>

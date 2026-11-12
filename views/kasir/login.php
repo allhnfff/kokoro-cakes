@@ -14,6 +14,7 @@
             <label for="password">Password</label>
             <input id="password" type="password" name="password" autocomplete="current-password" required>
         </div>
+        <label class="radio-line"><input type="checkbox" name="ingat" value="1"> Ingat saya <span class="muted small">(tetap masuk hingga 12 jam di perangkat ini)</span></label>
         <button type="submit" class="btn btn-primary btn-block">Masuk</button>
     </form>
     <p class="small muted">Lupa password? Minta pemilik toko untuk mengatur ulang.</p>

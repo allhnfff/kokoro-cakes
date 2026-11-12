@@ -56,6 +56,10 @@ final class CheckoutController extends Controller
             View::redirect('/keranjang');
         }
         $old = Session::takeOld() ?: ($_SESSION['checkout_draft']['input'] ?? []);
+        // Catatan ditulis di keranjang (wireframe no. 5); di checkout tinggal ditampilkan.
+        if (!array_key_exists('catatan', $old) || $old['catatan'] === '') {
+            $old['catatan'] = (string) ($_SESSION['catatan_pesanan'][$table] ?? '');
+        }
         $errors = is_array($_SESSION['_field_errors'] ?? null) ? $_SESSION['_field_errors'] : [];
         unset($_SESSION['_field_errors']);
         $this->render('shop/checkout', [
@@ -218,7 +222,7 @@ final class CheckoutController extends Controller
     /** Sukses: keranjang meja sudah dikosongkan oleh skrip checkout. Tampilkan pesanan. */
     private function finish(array $order): never
     {
-        unset($_SESSION['checkout_draft'], $_SESSION['checkout_pending']);
+        unset($_SESSION['checkout_draft'], $_SESSION['checkout_pending'], $_SESSION['catatan_pesanan'][$order['kode_meja']]);
         View::redirect('/pesanan/' . $order['id'] . '?baru=1');
     }
 

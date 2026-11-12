@@ -24,8 +24,9 @@ $method = $val('metode_bayar') ?: 'qris';
             <?= $err('nama_pemesan') ?>
         </div>
         <div class="field">
-            <label for="catatan">Catatan untuk dapur <span class="muted">(opsional)</span></label>
-            <textarea id="catatan" name="catatan" rows="3" maxlength="200" placeholder="Contoh: es sedikit, tanpa gula tambahan"<?= $aria('catatan') ?>><?= e($val('catatan')) ?></textarea>
+            <span class="label">Catatan pesanan</span>
+            <input type="hidden" name="catatan" value="<?= e($val('catatan')) ?>">
+            <p class="note-readonly"><?= $val('catatan') !== '' ? e($val('catatan')) : '<span class="muted">Tidak ada catatan.</span>' ?> <a href="/keranjang" class="small">Ubah di keranjang</a></p>
             <?= $err('catatan') ?>
         </div>
         <fieldset class="field">
