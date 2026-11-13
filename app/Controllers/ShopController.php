@@ -57,35 +57,33 @@ final class ShopController extends Controller
             'activeOrders' => $activeOrders,
             'picks'      => $picks,
             'heroPhoto'  => $heroPhoto,
-            'slides'     => $heroPhoto !== null ? $this->heroSlides($heroPhoto, $picks, $index) : [],
+            'slides'     => $heroPhoto !== null ? $this->heroSlides($heroPhoto, $index) : [],
         ]);
     }
 
     /**
-     * Slide foto beranda: foto suasana kafe dulu, lalu menu Pilihan Dapur, lalu satu menu per kategori.
-     * Hanya menu yang Tersedia dan punya foto; maksimal 5 menu agar titik navigasinya tetap sedikit.
-     * @param list<array> $picks @param list<array> $index
-     * @return list<array{src:string,menu:?array,pick:bool}>
+     * Slide foto beranda: foto suasana kafe, lalu satu foto per kategori (maksimal 5).
+     * Foto kategori = public/assets/img/beranda-{id kategori}.webp|.png|.jpg (foto pajangan bergaya sama dengan hero).
+     * Selama foto itu belum ada, dipakai foto menu pertama kategori tersebut yang Tersedia.
+     * @param list<array> $index
+     * @return list<array{src:string,cat:?array,menu:?array}>
      */
-    private function heroSlides(string $heroPhoto, array $picks, array $index): array
+    private function heroSlides(string $heroPhoto, array $index): array
     {
-        $slides = [['src' => $heroPhoto, 'menu' => null, 'pick' => false]];
-        $seen = [];
-        $add = static function (array $m, bool $pick) use (&$slides, &$seen): void {
-            $photo = menu_photo($m);
-            if ($photo === null || isset($seen[$m['id']]) || count($slides) > 5) {
-                return;
-            }
-            $seen[$m['id']] = true;
-            $slides[] = ['src' => $photo, 'menu' => $m, 'pick' => $pick];
-        };
-        foreach ($picks as $m) {
-            $add($m, true);
-        }
+        $slides = [['src' => $heroPhoto, 'cat' => null, 'menu' => null]];
         foreach ($index as $c) {
+            if (count($slides) > 5) {
+                break;
+            }
+            $own = owner_image('beranda-' . $c['id']);
+            if ($own !== null) {
+                $slides[] = ['src' => $own, 'cat' => $c, 'menu' => null];
+                continue;
+            }
             foreach ($c['sample'] as $m) {
-                if (menu_photo($m) !== null && !isset($seen[$m['id']])) {
-                    $add($m, false);
+                $photo = menu_photo($m);
+                if ($photo !== null) {
+                    $slides[] = ['src' => $photo, 'cat' => null, 'menu' => $m];
                     break;
                 }
             }

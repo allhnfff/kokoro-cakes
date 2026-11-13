@@ -24,17 +24,22 @@ $wifiPass = (string) config('store.wifi_password');
             <?php if ($slides): ?>
                 <div class="hero-track" data-carousel tabindex="0" role="region" aria-roledescription="carousel" aria-label="Foto <?= e((string) config('store.name')) ?>, geser untuk melihat menu lain">
                     <?php foreach ($slides as $i => $s): ?>
-                        <?php $m = $s['menu']; ?>
-                        <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="<?= $i + 1 ?> dari <?= count($slides) ?><?= $m ? ': ' . e($m['nama_menu']) : '' ?>">
-                            <?php if ($m === null): ?>
-                                <img src="<?= e($s['src']) ?>" alt="Suasana meja <?= e((string) config('store.name')) ?>: matcha, shortcake, dango, dan daifuku" width="880" height="660" fetchpriority="high">
-                            <?php else: ?>
+                        <?php $m = $s['menu']; $c = $s['cat']; $label = $c['nama_kategori'] ?? $m['nama_menu'] ?? ''; ?>
+                        <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="<?= $i + 1 ?> dari <?= count($slides) ?><?= $label !== '' ? ': ' . e($label) : '' ?>">
+                            <?php if ($c !== null): ?>
+                                <img src="<?= e($s['src']) ?>" alt="Pilihan <?= e($c['nama_kategori']) ?> di <?= e((string) config('store.name')) ?>" width="1440" height="1080" loading="lazy">
+                                <a class="hero-cap" href="/menu?kategori=<?= e($c['id']) ?>">
+                                    <b><?= e($c['nama_kategori']) ?></b>
+                                    <span><?= (int) $c['count'] ?> menu<?= $c['min'] !== null ? ' · mulai ' . rupiah($c['min']) : '' ?></span>
+                                </a>
+                            <?php elseif ($m !== null): ?>
                                 <img src="<?= e($s['src']) ?>" alt="<?= e($m['nama_menu']) ?>" width="800" height="800" loading="lazy">
                                 <a class="hero-cap" href="/menu/<?= e($m['id']) ?>">
-                                    <?php if ($s['pick']): ?><small>Pilihan dapur hari ini</small><?php endif; ?>
                                     <b><?= e($m['nama_menu']) ?></b>
                                     <span><?= rupiah($m['harga']) ?></span>
                                 </a>
+                            <?php else: ?>
+                                <img src="<?= e($s['src']) ?>" alt="Suasana meja <?= e((string) config('store.name')) ?>: matcha, shortcake, dango, dan daifuku" width="880" height="660" fetchpriority="high">
                             <?php endif; ?>
                         </div>
                     <?php endforeach; ?>

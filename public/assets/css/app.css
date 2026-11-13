@@ -213,8 +213,7 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--
 .hero-dot { width: 28px; height: 28px; display: grid; place-items: center; padding: 0; border: 0; background: none; cursor: pointer; }
 .hero-dot::before { content: ""; width: 8px; height: 8px; border-radius: 4px; background: var(--line-2); transition: width .25s ease, background-color .25s ease; }
 .hero-dot[aria-current="true"]::before { width: 22px; background: var(--matcha); }
-.hero-dot:focus-visible, .hero-pause:focus-visible { outline: 3px solid var(--matcha); outline-offset: 1px; border-radius: var(--r-sm); }
-.hero-pause { width: 32px; height: 32px; margin-left: 6px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line-2); border-radius: 50%; background: var(--paper); color: var(--ink); cursor: pointer; }
+.hero-dot:focus-visible { outline: 3px solid var(--matcha); outline-offset: 1px; border-radius: var(--r-sm); }
 .entrance-text h1 { font-size: clamp(28px, 5vw, 40px); margin-bottom: 10px; }
 .entrance-text > p { font-size: 17px; color: var(--muted); max-width: 34em; }
 /* Cara baca + arti salam Jepang (へようこそ), agar tamu yang tidak membaca kana tetap paham */
