@@ -26,17 +26,14 @@ $wifiPass = (string) config('store.wifi_password');
                     <?php foreach ($slides as $i => $s): ?>
                         <?php $m = $s['menu']; $c = $s['cat']; $label = $c['nama_kategori'] ?? $m['nama_menu'] ?? ''; ?>
                         <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="<?= $i + 1 ?> dari <?= count($slides) ?><?= $label !== '' ? ': ' . e($label) : '' ?>">
+                            <?php /* Foto tampil bersih tanpa label; foto kategori/menu tetap bisa diklik ke menunya. */ ?>
                             <?php if ($c !== null): ?>
-                                <img src="<?= e($s['src']) ?>" alt="Pilihan <?= e($c['nama_kategori']) ?> di <?= e((string) config('store.name')) ?>" width="1440" height="1080" loading="lazy">
-                                <a class="hero-cap" href="/menu?kategori=<?= e($c['id']) ?>">
-                                    <b><?= e($c['nama_kategori']) ?></b>
-                                    <span><?= (int) $c['count'] ?> menu<?= $c['min'] !== null ? ' · mulai ' . rupiah($c['min']) : '' ?></span>
+                                <a class="hero-link" href="/menu?kategori=<?= e($c['id']) ?>" aria-label="Lihat menu <?= e($c['nama_kategori']) ?>">
+                                    <img src="<?= e($s['src']) ?>" alt="Pilihan <?= e($c['nama_kategori']) ?> di <?= e((string) config('store.name')) ?>" width="1440" height="1080" loading="lazy">
                                 </a>
                             <?php elseif ($m !== null): ?>
-                                <img src="<?= e($s['src']) ?>" alt="<?= e($m['nama_menu']) ?>" width="800" height="800" loading="lazy">
-                                <a class="hero-cap" href="/menu/<?= e($m['id']) ?>">
-                                    <b><?= e($m['nama_menu']) ?></b>
-                                    <span><?= rupiah($m['harga']) ?></span>
+                                <a class="hero-link" href="/menu/<?= e($m['id']) ?>" aria-label="Lihat <?= e($m['nama_menu']) ?>">
+                                    <img src="<?= e($s['src']) ?>" alt="<?= e($m['nama_menu']) ?>" width="800" height="800" loading="lazy">
                                 </a>
                             <?php else: ?>
                                 <img src="<?= e($s['src']) ?>" alt="Suasana meja <?= e((string) config('store.name')) ?>: matcha, shortcake, dango, dan daifuku" width="880" height="660" fetchpriority="high">
