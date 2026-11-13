@@ -50,13 +50,47 @@ final class ShopController extends Controller
             $this->data()->listOrders(['type' => 'customer', 'owner_hash' => Session::ownerHash()], ['limit' => 10]),
             static fn ($o) => OrderRules::isActive((string) $o['status_pesanan'])
         )), 0, 3);
+        $heroPhoto = owner_image('hero');
         $this->render('shop/home', [
             'title'      => 'Beranda',
             'index'      => $index,
             'activeOrders' => $activeOrders,
             'picks'      => $picks,
-            'heroPhoto'  => owner_image('hero'),
+            'heroPhoto'  => $heroPhoto,
+            'slides'     => $heroPhoto !== null ? $this->heroSlides($heroPhoto, $picks, $index) : [],
         ]);
+    }
+
+    /**
+     * Slide foto beranda: foto suasana kafe dulu, lalu menu Pilihan Dapur, lalu satu menu per kategori.
+     * Hanya menu yang Tersedia dan punya foto; maksimal 5 menu agar titik navigasinya tetap sedikit.
+     * @param list<array> $picks @param list<array> $index
+     * @return list<array{src:string,menu:?array,pick:bool}>
+     */
+    private function heroSlides(string $heroPhoto, array $picks, array $index): array
+    {
+        $slides = [['src' => $heroPhoto, 'menu' => null, 'pick' => false]];
+        $seen = [];
+        $add = static function (array $m, bool $pick) use (&$slides, &$seen): void {
+            $photo = menu_photo($m);
+            if ($photo === null || isset($seen[$m['id']]) || count($slides) > 5) {
+                return;
+            }
+            $seen[$m['id']] = true;
+            $slides[] = ['src' => $photo, 'menu' => $m, 'pick' => $pick];
+        };
+        foreach ($picks as $m) {
+            $add($m, true);
+        }
+        foreach ($index as $c) {
+            foreach ($c['sample'] as $m) {
+                if (menu_photo($m) !== null && !isset($seen[$m['id']])) {
+                    $add($m, false);
+                    break;
+                }
+            }
+        }
+        return $slides;
     }
 
     public function menu(): void

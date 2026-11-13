@@ -5,6 +5,7 @@
  * @var list<array> $picks  pilihan dapur hari ini yang sedang Tersedia (dipilih kasir)
  * @var string|null $table @var int|null $cartCount
  * @var string|null $heroPhoto
+ * @var list<array> $slides foto beranda yang bisa digeser: suasana kafe + menu (src, menu|null, pick)
  * @var list<array> $activeOrders pesanan aktif dari perangkat ini (Masuk/Diproses/Siap Diantar)
  */
 use App\Http\View;
@@ -15,12 +16,33 @@ $wifiPass = (string) config('store.wifi_password');
 ?>
 <section class="entrance<?= $heroPhoto !== null ? ' has-photo' : '' ?>">
     <?php /* Noren digantung di atas foto: tamu "melihat ke dalam kafe" lewat tirai pintu masuk. */ ?>
-    <figure class="entrance-photo">
-        <div class="noren" aria-hidden="true" lang="ja"><span>こ</span><span>こ</span><span>ろ</span></div>
-        <?php if ($heroPhoto !== null): ?>
-            <img src="<?= e($heroPhoto) ?>" alt="Suasana meja <?= e((string) config('store.name')) ?>: matcha, shortcake, dango, dan daifuku" width="880" height="660" fetchpriority="high">
-        <?php endif; ?>
-    </figure>
+    <?php /* Foto bisa digeser (scroll-snap, jalan tanpa JavaScript). JavaScript menambah titik navigasi,
+             tombol jeda, dan ganti otomatis tiap 5 detik. */ ?>
+    <div class="entrance-media">
+        <figure class="entrance-photo">
+            <div class="noren" aria-hidden="true" lang="ja"><span>こ</span><span>こ</span><span>ろ</span></div>
+            <?php if ($slides): ?>
+                <div class="hero-track" data-carousel tabindex="0" role="region" aria-roledescription="carousel" aria-label="Foto <?= e((string) config('store.name')) ?>, geser untuk melihat menu lain">
+                    <?php foreach ($slides as $i => $s): ?>
+                        <?php $m = $s['menu']; ?>
+                        <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="<?= $i + 1 ?> dari <?= count($slides) ?><?= $m ? ': ' . e($m['nama_menu']) : '' ?>">
+                            <?php if ($m === null): ?>
+                                <img src="<?= e($s['src']) ?>" alt="Suasana meja <?= e((string) config('store.name')) ?>: matcha, shortcake, dango, dan daifuku" width="880" height="660" fetchpriority="high">
+                            <?php else: ?>
+                                <img src="<?= e($s['src']) ?>" alt="<?= e($m['nama_menu']) ?>" width="800" height="800" loading="lazy">
+                                <a class="hero-cap" href="/menu/<?= e($m['id']) ?>">
+                                    <?php if ($s['pick']): ?><small>Pilihan dapur hari ini</small><?php endif; ?>
+                                    <b><?= e($m['nama_menu']) ?></b>
+                                    <span><?= rupiah($m['harga']) ?></span>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </figure>
+        <?php if (count($slides) > 1): ?><div class="hero-dots" data-carousel-dots hidden></div><?php endif; ?>
+    </div>
 
     <div class="entrance-text">
         <?php if ($table !== null): ?>

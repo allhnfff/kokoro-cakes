@@ -6,6 +6,7 @@
    - Tambah ke keranjang tanpa pindah halaman (cadangan: form biasa)
    - Momen "pesanan siap": getar ponsel + pesan saat status berubah
    - Tombol stepper jumlah, cegah klik ganda, salin tautan QR
+   - Foto beranda yang bisa digeser: titik navigasi, tombol jeda, ganti otomatis tiap 5 detik
    Semua data diambil lewat server PHP; browser tidak pernah terhubung ke Redis.
    Halaman tetap berfungsi tanpa JavaScript.
    ===================================================================== */
@@ -296,6 +297,86 @@
             dlg.showModal();
             dlg.querySelector('[data-no]').focus();
         });
+    });
+
+    // ---------- Foto beranda: titik navigasi, tombol jeda, ganti otomatis tiap 5 detik ----------
+    // Tanpa JavaScript foto tetap bisa digeser (scroll-snap di CSS); di sini hanya tambahan.
+    document.querySelectorAll('[data-carousel]').forEach(function (track) {
+        var media = track.closest('.entrance-media');
+        var slides = track.querySelectorAll('.hero-slide');
+        var dotsBox = media && media.querySelector('[data-carousel-dots]');
+        if (slides.length < 2 || !dotsBox) { return; }
+        var DELAY = 5000;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var index = 0, timer = null, settle = null;
+        var paused = reduce;   // pengguna yang meminta gerakan dikurangi: tidak berganti sendiri
+        var hold = false;      // sementara: kursor di atas foto atau fokus keyboard di dalamnya
+        var visible = true;
+
+        // Foto menu memakai loading="lazy"; setelah halaman selesai dimuat, ambil semuanya agar tidak kosong saat bergeser.
+        function loadAll() { track.querySelectorAll('img[loading="lazy"]').forEach(function (img) { img.loading = 'eager'; }); }
+        if (document.readyState === 'complete') { loadAll(); } else { window.addEventListener('load', loadAll, { once: true }); }
+
+        var ICON_PAUSE = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>';
+        var ICON_PLAY = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>';
+        var dots = [];
+        slides.forEach(function (slide, i) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'hero-dot';
+            b.setAttribute('aria-label', 'Tampilkan foto ' + (i + 1) + ' dari ' + slides.length);
+            b.addEventListener('click', function () { go(i); });
+            dotsBox.appendChild(b);
+            dots.push(b);
+        });
+        var pauseBtn = document.createElement('button');
+        pauseBtn.type = 'button';
+        pauseBtn.className = 'hero-pause';
+        pauseBtn.addEventListener('click', function () { paused = !paused; render(); schedule(); });
+        dotsBox.appendChild(pauseBtn);
+        dotsBox.hidden = false;
+
+        function render() {
+            dots.forEach(function (d, i) { d.setAttribute('aria-current', i === index ? 'true' : 'false'); });
+            pauseBtn.innerHTML = paused ? ICON_PLAY : ICON_PAUSE;
+            pauseBtn.setAttribute('aria-label', paused ? 'Putar foto otomatis' : 'Jeda foto otomatis');
+        }
+        function go(i) {
+            track.scrollTo({ left: i * track.clientWidth, behavior: reduce ? 'auto' : 'smooth' });
+        }
+        function schedule() {
+            clearTimeout(timer);
+            if (paused || hold || !visible || document.hidden) { return; }
+            timer = setTimeout(function () { go((index + 1) % slides.length); }, DELAY);
+        }
+        // Setiap geseran selesai (otomatis, lewat titik, atau jari): perbarui titik lalu hitung ulang 5 detik.
+        track.addEventListener('scroll', function () {
+            clearTimeout(timer);
+            clearTimeout(settle);
+            settle = setTimeout(function () {
+                index = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+                render();
+                schedule();
+            }, 120);
+        }, { passive: true });
+
+        // Berhenti sebentar saat kursor di atas foto (hanya perangkat dengan kursor; di layar sentuh tidak ada "mouseleave").
+        if (window.matchMedia('(hover: hover)').matches) {
+            media.addEventListener('mouseenter', function () { hold = true; schedule(); });
+            media.addEventListener('mouseleave', function () { hold = false; schedule(); });
+        }
+        // Fokus keyboard di foto/titik juga menahan; tombol jeda sendiri tidak, agar "Putar" langsung berlaku.
+        media.addEventListener('focusin', function (e) { hold = e.target !== pauseBtn; schedule(); });
+        media.addEventListener('focusout', function (e) { if (!media.contains(e.relatedTarget)) { hold = false; schedule(); } });
+        document.addEventListener('visibilitychange', schedule);
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; schedule(); }, { threshold: 0.5 }).observe(track);
+        }
+        // Ponsel diputar / jendela diubah ukurannya: tetap di foto yang sama.
+        window.addEventListener('resize', function () { track.scrollLeft = index * track.clientWidth; });
+
+        render();
+        schedule();
     });
 
     // ---------- Tombol cetak (kartu QR meja) ----------
