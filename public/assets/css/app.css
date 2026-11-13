@@ -186,16 +186,18 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--
 /* Pintu masuk: noren digantung di atas foto (tamu melihat ke dalam kafe lewat tirai), teks rata kiri */
 .entrance { display: grid; gap: var(--s3); margin: 0 0 var(--s5); }
 .entrance-photo { position: relative; margin: 0; }
-.entrance.has-photo .entrance-photo { border-radius: var(--r); overflow: hidden; aspect-ratio: 4 / 3; background: var(--cream); }
+/* Noren digantung DI ATAS foto (bukan menimpanya): hanya ujung bawahnya yang bergelombang menjuntai ke tepi foto,
+   agar isi foto tidak tertutup. */
+.entrance.has-photo .entrance-photo { border-radius: var(--r); overflow: hidden; }
 .entrance-photo img { width: 100%; height: 100%; object-fit: cover; }
 .entrance:not(.has-photo) .noren { margin: 0; }
-.entrance.has-photo .noren { position: absolute; top: 0; left: 0; right: 0; max-width: none; margin: 0; z-index: 1; gap: 4px; }
+.entrance.has-photo .noren { position: relative; max-width: none; margin: 0 0 -12px; z-index: 1; gap: 4px; }
 .entrance.has-photo .noren::before { left: 0; right: 0; border-radius: 0; }
-.entrance.has-photo .noren span { height: 84px; font-size: 34px; }
+.entrance.has-photo .noren span { height: 72px; font-size: 32px; }
 /* Foto beranda yang bisa digeser: noren tetap tergantung di atas, foto di belakangnya berganti */
 .entrance.has-photo .noren { pointer-events: none; }
 .entrance-media { min-width: 0; }
-.hero-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+.hero-track { display: flex; aspect-ratio: 4 / 3; background: var(--cream); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
 .hero-track::-webkit-scrollbar { display: none; }
 .hero-track:focus-visible { outline: 3px solid var(--matcha); outline-offset: -3px; }
 .hero-slide { flex: 0 0 100%; position: relative; scroll-snap-align: start; scroll-snap-stop: always; }
@@ -630,7 +632,7 @@ img.kk-fade.is-loaded { opacity: 1; }
     .toast { bottom: 24px; }
     .entrance.has-photo { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: center; gap: var(--s4); }
     .entrance.has-photo .entrance-text { order: -1; }
-    .entrance.has-photo .noren span { height: 110px; font-size: 46px; }
+    .entrance.has-photo .noren span { height: 92px; font-size: 42px; }
     .main-nav { display: flex; margin-right: var(--s2); }
     .brand { margin-right: 0; }
     .hdr-in .main-nav { margin-left: auto; }
