@@ -16,8 +16,8 @@ $wifiPass = (string) config('store.wifi_password');
 ?>
 <section class="entrance<?= $heroPhoto !== null ? ' has-photo' : '' ?>">
     <?php /* Noren digantung di atas foto: tamu "melihat ke dalam kafe" lewat tirai pintu masuk. */ ?>
-    <?php /* Foto bisa digeser (scroll-snap, jalan tanpa JavaScript). JavaScript menambah titik navigasi,
-             tombol jeda, dan ganti otomatis tiap 5 detik. */ ?>
+    <?php /* Foto bisa digeser (scroll-snap, jalan tanpa JavaScript). JavaScript menambah titik navigasi
+             dan ganti otomatis tiap 5 detik. */ ?>
     <div class="entrance-media">
         <figure class="entrance-photo">
             <div class="noren" aria-hidden="true" lang="ja"><span>こ</span><span>こ</span><span>ろ</span></div>
@@ -49,7 +49,6 @@ $wifiPass = (string) config('store.wifi_password');
     <div class="entrance-text">
         <?php if ($table !== null): ?>
             <h1>Selamat datang di meja <?= e($table) ?></h1>
-            <p>Pilih menu, lalu kirim pesanan langsung ke dapur. Bayar dengan QRIS saat checkout atau nanti di kasir.</p>
         <?php else: ?>
             <?php $store = (string) config('store.name'); ?>
             <h1><?= e($store) ?> <span class="nowrap">e yōkoso</span></h1>
